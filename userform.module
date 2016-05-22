@@ -4,6 +4,8 @@
 */
 function userform_menu() {
   $items['userform/form'] = array(
+
+        'title' => 'Drupal Survey',
         'type' => MENU_CALLBACK,
         'access arguments' => array('access content'),
         'page callback' => 'drupal_get_form',
