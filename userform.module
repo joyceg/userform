@@ -1,0 +1,68 @@
+<?php
+/*
+* Implementation of drupal form.
+*/
+function userform_menu() {
+  $items['userform/form1'] = array(
+        'type' => MENU_CALLBACK,
+        'access arguments' => array('access content'),
+        'page callback' => 'drupal_get_form',
+        'page arguments'=>array('userform_form1'));
+
+  return $items;
+}
+
+function userform_form1() {
+    $form = array();
+
+
+    $form['name']=array(
+        '#type'=>'textfield',
+        '#title'=>t('Name:'),
+        '#description'=>t('Please add your name')
+      );
+
+     $form['emailId']=array(
+        '#type'=>'textfield',
+        '#title'=>t('Email Id:'),
+        '#description'=>t('Please add your Email Id')
+      );
+
+      $form['experience']=array(
+         '#type'=>'textarea',
+         '#title'=>t('Drupal Experience'),
+         '#description'=>t('Please share your interests and experience
+         with Drupal')
+       );
+
+    $form['country']=array(
+        '#type'=>'select',
+        '#title'=>t('What is your knowledge on Drupal?'),
+        '#options'=>array('Novice','Intermediate','Advanced')
+      );
+
+    $form['submit']=array(
+        '#type'=>'submit',
+        '#value'=>t('Submit')
+      );
+
+      return $form;
+}
+
+function userform_form1_validate($form, $form_state){
+
+  if(empty($form_state['values']['name']))
+     form_set_error('name','Please enter a valid name.');
+
+  elseif(filter_var($form_state['values']['emailId'], FILTER_VALIDATE_EMAIL) == false)
+    form_set_error('emailId','Please enter a valid Email Id.');
+
+    elseif(empty($form_state['values']['experience']))
+       form_set_error('experience','Please share your experience.');
+}
+
+function userform_form1_submit($form, $form_state){
+
+  drupal_set_message('Thanks for joining the survery!.');
+  drupal_goto('https://www.drupal.org/');
+}
